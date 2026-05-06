@@ -158,3 +158,91 @@
 *   **Command:** `$0`
 *   **Action:** References the shell variable for the current process, executing it to bypass filters converting input to uppercase.
 > **Analogy:** A bouncer demands you speak in uppercase letters; instead, you hand him your ID card (`$0`) to grant access without triggering his rule.
+
+### Permission Basics
+
+r = read = 4  
+w = write = 2  
+x = execute = 1  
+
+Add them:
+
+7 = rwx  
+6 = rw-  
+5 = r-x  
+4 = r--  
+
+
+## Permission Structure
+
+-rwxr-xr--
+
+Breakdown:
+
+-   rwx   r-x   r--
+|    |     |     |
+type owner group others
+
+
+
+## File Type
+
+- = normal file  
+d = directory  
+l = symbolic link  
+
+
+
+## Symbol Meaning
+
+u = user(owner)  
+g = group  
+o = others  
+a = all  
+
++ = add permission  
+- = remove permission  
+= = set exact permission  
+
+
+
+## Directory Permissions
+
+r = see filenames  
+w = create/delete  
+x = enter/access  
+
+
+
+## setuid Visual
+
+-rwsr-xr-x
+
+s = setuid enabled
+
+
+
+## setuid Commands
+
+chmod u+s file  
+chmod 4755 file  
+
+Leading 4 = setuid
+
+
+## Sticky Bit
+
+t = sticky bit
+
+Example:
+
+drwxrwxrwt
+
+Meaning:
+
+users cannot delete others' files
+
+Common in:
+
+/tmp
+
