@@ -296,3 +296,41 @@ Common in:
 - ICMP is a connectionless diagnostic protocol used by routers and hosts to communicate errors or test reachability (Ping).
 - Because it is necessary for troubleshooting, perimeter firewalls frequently allow ICMP traffic while blocking unknown TCP/UDP ports.
 - Attackers exploit this leniency by packing stolen data or command-and-control instructions into the arbitrary payload section of an ICMP Echo Request.
+
+
+## The OSI Model
+
+### L7 - Application (Data)
+- **Function:** Interfaces directly with software and users via HTTP, DNS, FTP.
+- **Vulnerabilities:** Software flaws such as Cross-Site Scripting (XSS), SQL Injection (SQLi), and Phishing.
+- **Defense:** Web Application Firewalls (WAF) and secure coding practices.
+
+### L6 - Presentation (Data)
+- **Function:** Handles encryption, decryption, and data formatting (JPEG, ASCII, TLS/SSL).
+- **Vulnerabilities:** Cryptographic failures or downgrading secure connections.
+- **Defense:** Enforcing strong cipher suites and certificate pinning.
+
+### L5 - Session (Data)
+- **Function:** Opens, manages, and tears down communication dialogues between hosts.
+- **Vulnerabilities:** Targeting authentication tokens (Session Hijacking) to impersonate users.
+- **Defense:** Short session timeouts and secure, randomized cookies.
+
+### L4 - Transport (Segments)
+- **Function:** Manages host-to-host reliability using TCP (guaranteed) or UDP (fast).
+- **Vulnerabilities:** State-exhaustion attacks (SYN Floods) and stealth port scanning.
+- **Defense:** Rate-limiting, SYN cookies, and Stateful Firewalls.
+
+### L3 - Network (Packets)
+- **Function:** Handles logical addressing (IPv4/IPv6) and inter-network routing (Routers, BGP).
+- **Vulnerabilities:** IP spoofing, routing loop attacks, and fragmentation bypasses.
+- **Defense:** Access Control Lists (ACLs) and strict route filtering.
+
+### L2 - Data Link (Frames)
+- **Function:** Handles physical addressing (MAC) and local network switching (Switches, VLANs).
+- **Vulnerabilities:** Local Man-in-the-Middle (ARP Spoofing) and broadcast storms.
+- **Defense:** Port Security, Dynamic ARP Inspection, and proper VLAN segmentation.
+
+### L1 - Physical (Bits)
+- **Function:** The raw transmission of signals over cables, fiber optics, or radio frequencies.
+- **Vulnerabilities:** Physical destruction, radio jamming, or hardware keystroke loggers.
+- **Defense:** Locked doors, security cameras, and shielded cables.
