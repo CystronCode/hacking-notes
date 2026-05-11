@@ -245,4 +245,54 @@ users cannot delete others' files
 Common in:
 
 /tmp
+## Network Fundamentals & Attack Vectors
 
+### TCP/IP Architecture & Encapsulation
+- The network operates on four layers: Application (Data), Transport (Segments), Internet (Packets), and Network Access (Frames).
+- Data is encapsulated as it moves down the stack (adding headers) and decapsulated as it moves up (stripping headers).
+- Vulnerabilities are layer-specific; you exploit the distinct rules of one layer, not the network as a whole.
+
+### TCP vs. UDP
+- TCP is connection-oriented, requiring a 3-way handshake (SYN, SYN-ACK, ACK) to guarantee reliable, ordered delivery.
+- UDP is connectionless, prioritizing maximum speed over reliability by firing packets without establishing a session.
+- TCP is weaponized via state exhaustion (tying up connections); UDP is weaponized via spoofed amplification (reflecting massive traffic).
+
+### SYN Flood DDoS
+- Exploits the TCP handshake by sending thousands of SYN requests and intentionally ignoring the SYN-ACK responses.
+- The target server allocates RAM for each half-open connection until it runs out of memory and crashes.
+- Defense requires SYN cookies, strict rate limiting, or load balancing to handle the artificial state overhead.
+
+### IP Routing & Spoofing (Layer 3)
+- IP addresses dictate global routing and remain constant from the true source to the final destination.
+- IP Spoofing involves forging the source IP in the packet header to hide origin or orchestrate reflection attacks.
+- IP Spoofing cannot be used for two-way interception, because the target's replies will route to the forged IP, not the attacker.
+
+### MAC & ARP Spoofing (Layer 2)
+- MAC addresses are physical hardware identifiers that change at every single router hop to navigate the immediate physical segment.
+- Address Resolution Protocol (ARP) maps logical IPs to physical MACs on local networks but lacks any authentication.
+- ARP Spoofing poisons the caches of both the router and the target device to route local traffic through the attacker (Man-in-the-Middle).
+
+### Subnetting & CIDR
+- Subnetting uses bitwise masks (e.g., /24) to mathematically divide a flat network into logically isolated zones.
+- Proper segmentation restricts lateral movement, ensuring a compromised low-privilege machine cannot directly route to critical infrastructure.
+- Mapping a target's CIDR blocks is the mandatory first step of internal network reconnaissance.
+
+### TCP Windowing & Flags
+- TCP headers use control flags (SYN, ACK, RST, FIN, PSH, URG) to dictate the exact state and behavior of a connection.
+- Attackers use "Half-Open" stealth scans by sending a SYN, receiving a SYN-ACK, and abruptly terminating with an RST.
+- This confirms a port is open without completing the handshake, bypassing application-level logging.
+
+### BGP (Border Gateway Protocol)
+- BGP is the routing protocol of the internet backbone, allowing massive Autonomous Systems (ISPs) to advertise optimal traffic paths.
+- It was built on implicit trust, meaning global routers inherently believe the routing advertisements of their peers.
+- BGP Hijacking involves a malicious entity falsely advertising the best route to a target, allowing them to intercept or blackhole global traffic.
+
+### VLAN Hopping
+- Virtual LANs logically isolate traffic on a shared physical switch using assigned 802.1Q tags.
+- Attackers execute Double-Tagging by wrapping a restricted internal VLAN tag inside an external native VLAN tag.
+- The first switch strips the outer tag and blindly forwards the traffic, injecting the attacker into the restricted segment.
+
+### ICMP (Internet Control Message Protocol)
+- ICMP is a connectionless diagnostic protocol used by routers and hosts to communicate errors or test reachability (Ping).
+- Because it is necessary for troubleshooting, perimeter firewalls frequently allow ICMP traffic while blocking unknown TCP/UDP ports.
+- Attackers exploit this leniency by packing stolen data or command-and-control instructions into the arbitrary payload section of an ICMP Echo Request.
